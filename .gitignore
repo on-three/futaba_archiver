@@ -3,6 +3,10 @@
 # C extensions
 *.so
 
+#databases
+*.sqlite3
+*.db
+
 # Packages
 *.egg
 *.egg-info
