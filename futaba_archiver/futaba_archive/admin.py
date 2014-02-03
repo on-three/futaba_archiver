@@ -2,4 +2,7 @@
 from django.contrib import admin
 from futaba_archive.models import Post
 
-admin.site.register(Post)
+class PostAdmin(admin.ModelAdmin):
+  list_display = ('number', 'date', 'is_thread')
+
+admin.site.register(Post, PostAdmin)
