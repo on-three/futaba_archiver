@@ -7,7 +7,8 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', views.index, name='index'),
-    # url(r'^blog/', include('blog.urls')),
-
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^(?P<board_name>[^/]+)/$',views.board, name="board"),
+    url(r'^(?P<board_name>[^/]+)/(?P<post_number>\d*?)/$',views.thread, name="thread"),
+    
 )

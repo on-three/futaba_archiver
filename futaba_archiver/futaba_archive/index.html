@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Futaba Archive</title>
+</head>
+<body>
+<h1 class="tablename">Boards</h1>
+  <table class="urls bordered">
+    <tr class='definition'>
+    {% for board in boards %}
+      <td class="board"><a href="{{ board.name }}">{{ board.name }}</a></td>
+    {% endfor %}    
+    </tr>
+  </table>
+</body>

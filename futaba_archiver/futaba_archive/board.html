@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+{% autoescape off %}
+<title>{{ board.name }}</title>
+</head>
+<body>
+<h1 class="boardname">{{ board.name }}</h1>
+  <table class="urls bordered">
+    {% for thread in threads %}
+    <tr class='post'>
+    
+      <td class="post">{{ thread.text }}</td><td><a href="{{ thread.number }}">{{ thread.number }}</a></td>
+        
+    </tr>
+    {% endfor %}
+  </table>
+</body>
+{% endautoescape %}

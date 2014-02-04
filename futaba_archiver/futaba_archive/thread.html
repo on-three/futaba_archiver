@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+{% autoescape off %}
+<title>{{ board.name }}</title>
+</head>
+<body>
+<h1 class="boardname">{{ board.name }}</h1>
+  <table class="urls bordered">
+    {% for post in posts %}
+    <tr class='post'>
+    
+      <td class="post">{{ post.text }}</td>
+        
+    </tr>
+    {% endfor %}
+  </table>
+</body>
+{% endautoescape %}
