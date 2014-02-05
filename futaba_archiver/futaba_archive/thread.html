@@ -2,28 +2,30 @@
 <html>
 <head>
 {% autoescape off %}
-<title>{{ board.name }}</title>
+<title id="channel_name" class="boardTitle">{{ board.name }}</title>
+{% load staticfiles %}<link rel="stylesheet" href="{% static "yotsubanew.css" %}" type="text/css" />
 </head>
 <body>
 <a href="/{{ board.name }}/"><h1 class="boardname">{{ board.name }}</h1></a>
   <div name="top_div">
   </div>
+<div class='thread'>
 <hr/>
-No.<a href="{{ thread.number }}">{{ thread.number }}</a><br>
-  <span class='thread_title'>{{ thread.title }}</span> <span class='thread_poster'>{{ thread.poster }}</span><br>
-  <blockquote>{{ thread.text }}</blockquote>
+<div class="postContainer opContainer">
+No.{{ thread.number }}<br>
+  <span class='subject'>{{ thread.title }}</span> <span class='name'>{{ thread.poster }}</span><br>
+  <blockquote class="postMessage">{{ thread.text }}</blockquote>
+</div>
   {% for post in posts %}
-  <table class="response">
-    <tbody>
-    <tr>
-      <td class='right_elipsis'>…</td>
+</div class="postContainer replyContainer">
+  <div class="sideArrows">…</div>
+  <div class="post reply">
       <td class='text_block'><span class='post_title'>{{ post.title }}</span> Name <span class='poster_name'>{{ post.poster }}</span> No.{{ post.number }}<br/>
-        <blockquote>{{ post.text }}</blockquote>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+        <blockquote class="postMessage">{{ post.text }}</blockquote>
+  </div>
+</div>
     {% endfor %}
   </table>
+</div>
 </body>
 {% endautoescape %}

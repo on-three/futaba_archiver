@@ -3,6 +3,7 @@
 <head>
 {% autoescape off %}
 <title>{{ board.name }}</title>
+{% load staticfiles %}<link rel="stylesheet" href="{% static "yotsubanew.css" %}" type="text/css" />
 </head>
 <body>
 <h1 class="boardname">{{ board.name }}</h1>
@@ -10,9 +11,11 @@
   </div>
   <hr/>
     {% for thread in threads %}
+<div class="postContainer opContainer">
   No.<a href="{{ thread.number }}">{{ thread.number }}</a><br>
-  <span class='thread_title'>{{ thread.title }}</span> <span class='thread_poster'>{{ thread.poster }}</span><br>
-  <blockquote>{{ thread.text }}</blockquote>
+  <span class='subject'>{{ thread.title }}</span> <span class='name'>{{ thread.poster }}</span><br>
+  <blockquote class="postMessage">{{ thread.text }}</blockquote>
+</div>
   <hr/>
     {% endfor %}
 </body>
