@@ -41,11 +41,11 @@ def thread(request, board_name, post_number):
   if not thread:
     return HttpResponseNotFound('<h1>Thread not found</h1>')
   
-  #TODO: append responses to list with initial post itself.
   posts = thread.post_set.all()
   t = loader.get_template('futaba_archive/thread.html')
   c = Context({
-    'board': board,
-    'posts' : posts,
+    'thread':thread,
+    'board':board,
+    'posts':posts,
     })
   return HttpResponse(t.render(c))

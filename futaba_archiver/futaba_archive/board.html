@@ -6,14 +6,14 @@
 </head>
 <body>
 <h1 class="boardname">{{ board.name }}</h1>
-  <table class="urls bordered">
+  <div name="top_div">
+  </div>
+  <hr/>
     {% for thread in threads %}
-    <tr class='post'>
-    
-      <td class="post">{{ thread.text }}</td><td><a href="{{ thread.number }}">{{ thread.number }}</a></td>
-        
-    </tr>
+  No.<a href="{{ thread.number }}">{{ thread.number }}</a><br>
+  <span class='thread_title'>{{ thread.title }}</span> <span class='thread_poster'>{{ thread.poster }}</span><br>
+  <blockquote>{{ thread.text }}</blockquote>
+  <hr/>
     {% endfor %}
-  </table>
 </body>
 {% endautoescape %}

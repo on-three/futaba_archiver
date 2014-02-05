@@ -5,14 +5,24 @@
 <title>{{ board.name }}</title>
 </head>
 <body>
-<h1 class="boardname">{{ board.name }}</h1>
-  <table class="urls bordered">
-    {% for post in posts %}
-    <tr class='post'>
-    
-      <td class="post">{{ post.text }}</td>
-        
+<a href="/{{ board.name }}/"><h1 class="boardname">{{ board.name }}</h1></a>
+  <div name="top_div">
+  </div>
+<hr/>
+No.<a href="{{ thread.number }}">{{ thread.number }}</a><br>
+  <span class='thread_title'>{{ thread.title }}</span> <span class='thread_poster'>{{ thread.poster }}</span><br>
+  <blockquote>{{ thread.text }}</blockquote>
+  {% for post in posts %}
+  <table class="response">
+    <tbody>
+    <tr>
+      <td class='right_elipsis'>…</td>
+      <td class='text_block'><span class='post_title'>{{ post.title }}</span> Name <span class='poster_name'>{{ post.poster }}</span> No.{{ post.number }}<br/>
+        <blockquote>{{ post.text }}</blockquote>
+      </td>
     </tr>
+    </tbody>
+  </table>
     {% endfor %}
   </table>
 </body>
