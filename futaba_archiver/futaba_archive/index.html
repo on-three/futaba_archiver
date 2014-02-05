@@ -2,14 +2,14 @@
 <html>
 <head>
 <title>Futaba Archive</title>
+{% load staticfiles %}<link rel="stylesheet" href="{% static "yotsubanew.css" %}" type="text/css" />
 </head>
 <body>
-<h1 class="tablename">Boards</h1>
-  <table class="urls bordered">
-    <tr class='definition'>
-    {% for board in boards %}
-      <td class="board"><a href="{{ board.name }}">{{ board.name }}</a></td>
-    {% endfor %}    
-    </tr>
-  </table>
+<h1 class="tablename">Futaba Archive</h1>
+<div class="desktop"><span class="boardList">
+{% for board in boards %}
+<a href="{{ board.name }}">{{ board.name }}</a></span>
+{% endfor %}
+</span> 
+</div>
 </body>
