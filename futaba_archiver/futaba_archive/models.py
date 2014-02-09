@@ -8,6 +8,7 @@ class Board(models.Model):
   this model therefore has a 'hidden' member 'Post_set' that can be used to
   query for and filter post objects belonging to a board.
   '''
+  #TODO: make unique index off URL?
   name = models.CharField(max_length=128)
   url = models.CharField(max_length=512)
 
@@ -20,7 +21,7 @@ class Post(models.Model):
   title = models.CharField(max_length=128)
   poster = models.CharField(max_length=128)
   date = models.DateTimeField('date published')
-  number = models.IntegerField()
+  number = models.IntegerField(unique=True)
   image = models.CharField(max_length=256)
   thumbnail = models.CharField(max_length=256)
   text = models.CharField(max_length=1024)

@@ -26,20 +26,23 @@ import pwd
 import grp
 import logging
 logging.basicConfig()
+import urllib
+from urlparse import urlsplit
+from os.path import splitext, basename
 
 SECONDS_TO_MINUTES = 60
 
-#from futaba_scrape import scrape_futaba
 from futaba_scrape import get_threads
 from futaba_scrape import Post
 
 try:
   #we try to access django settings for the web interface to access
-  #the samed databas (via django settings file)
+  #the same database (via django settings file)
   
   os.environ.setdefault("DJANGO_SETTINGS_MODULE", "webserver.settings")
   from futaba_archive.models import Post as DBPost
-  from futaba_archive.models import Board as DBBoard                  
+  from futaba_archive.models import Board as DBBoard
+  from django.conf import settings               
 except ImportError:
   print 'Could not specify DJANGO_SETTINGS_MODULE via django settings module. Failing'
   sys.exit(-1)
@@ -47,9 +50,36 @@ except ImportError:
 #TODO: Store image static destination path in db or in django settings?
 #NOTE: management of permissions to create/edit in this path is done here
 #you'll have to run this from a user in a group that has permissions
-STATIC_FILE_PATH = os.path.dirname(__file__)
-IMAGE_DIR='images/'
-THUMBNAIL_DIR='thumbnails/'
+STATIC_FILE_PATH = settings.LOCAL_STATIC_PATH
+IMAGE_DIR='/images/'
+THUMBNAIL_DIR='/thumbnails/'
+
+def filename_from_url(url):
+  '''
+  Estimate filename from a file (here image) URL
+  '''
+  return os.path.basename(urlsplit(url).path)
+
+def get_file(url, destination):
+  '''
+  Download image file to indicated path
+  returns local full path to file
+  '''
+  if not url:
+    return url
+  try:
+    filename = filename_from_url(url)
+    #print 'downloading {file} to {dir} from {url}'.format(file=filename, dir=destination, url=url)
+    filepath = destination + filename
+    #if a local copy of file exists, don't download again
+    if os.path.exists:
+      return filepath
+    urllib.urlretrieve(url, destination + filename)
+    return filepath
+  except Exception as e:
+    print str(e)
+    return ''
+  return ''
 
 def requires_directory(path, username, groupname):
   '''
@@ -59,10 +89,11 @@ def requires_directory(path, username, groupname):
   '''
   try:
     if not os.path.exists(path):
+      print 'Directory {path} does not exist. Creating it.'.format(path=path)
       os.makedirs(path, mode=0775)
-      uid = pwd.getpwnam(username).pw_uid
-      gid = grp.getgrnam(groupname).gr_gid
-      os.chown(path, uid, gid)
+      #uid = pwd.getpwnam(username).pw_uid
+      #gid = grp.getgrnam(groupname).gr_gid
+      #os.chown(path, uid, gid)
   except OSError as error:
     print(error)
     print(error.args)
@@ -73,26 +104,26 @@ def update_archive_db(board, thread):
   '''
   Update django database with info on a single thread,
   including its posts, images and responses etc.
-  arg: thread: futaba_scrape.Post object with thread info
-  '''
-  #make sure a destination directory for images and thumbnails exist
-  #permissions to create directories must be managed elsewhere
-  #TODO: Need to make sure board names are without spaces or odd characters
-  IMAGE_DEST_DIR = STATIC_FILE_PATH + '/'+ board.name + '/' + IMAGE_DIR
-  THUMBNAIL_DEST_DIR = STATIC_FILE_PATH + '/' + board.name + '/' + THUMBNAIL_DIR
-  requires_directory(IMAGE_DEST_DIR, 'www-data', 'www-data')
-  requires_directory(THUMBNAIL_DEST_DIR, 'www-data', 'www-data')
+  arg: thread: futaba_scrape.Post object with thread info.
 
+  Required board.image_destination_dir and
+  board.thumbnail_destination_dir to be defined before
+  invoking.
+  Can't currently carry those in the db. Or can we?
+  '''
   db_time = datetime.fromtimestamp(mktime(thread.time))
   dbp = DBPost(board=board, \
     title=thread.title, \
     poster=thread.name, \
     date=db_time, \
     number=thread.number, \
-    image=thread.image, \
-    thumbnail=thread.thumbnail, \
+    image=get_file(thread.image, board.image_destination_dir), \
+    thumbnail=get_file(thread.thumbnail, board.thumbnail_destination_dir), \
     text=thread.text)
-  dbp.save()
+  try:#save() call with raise on a duplicate post number save
+    dbp.save()
+  except Exception as e:
+    pass
   for post_number, response in thread.responses.iteritems():
     db_time = datetime.fromtimestamp(mktime(response.time))
     r = DBPost(board=board, \
@@ -100,12 +131,14 @@ def update_archive_db(board, thread):
       poster=response.name, \
       date=db_time, \
       number=response.number, \
-      image=response.image, \
-      thumbnail=response.thumbnail, \
+      image=get_file(response.image, board.image_destination_dir), \
+      thumbnail=get_file(response.thumbnail, board.thumbnail_destination_dir), \
       text=response.text, \
       parent=dbp)
-    r.save()
-
+    try:#save() will raise on a duplicate post number save
+      r.save()
+    except Exception as e:
+      pass
 
 def update_archive(board):
   print '++++{board}:{url}++++'.format(board=board.name, url=board.url)
@@ -124,6 +157,19 @@ def main():
 
   #we only read the urls from the database at startup. Restart required for new/chaned boards
   boards = DBBoard.objects.all()
+  if not boards:
+    print 'No boards provided in current database. FAILING'
+    sys.exit(-1)
+
+  #ensure we have static file server destination image file directories for all boards
+  #TODO: Need to make sure board names are without spaces or odd characters
+  for board in boards:
+    IMAGE_DEST_DIR = STATIC_FILE_PATH + board.name + IMAGE_DIR
+    THUMBNAIL_DEST_DIR = STATIC_FILE_PATH + board.name + THUMBNAIL_DIR
+    requires_directory(IMAGE_DEST_DIR, 'www-data', 'www-data')
+    board.image_destination_dir = IMAGE_DEST_DIR
+    requires_directory(THUMBNAIL_DEST_DIR, 'www-data', 'www-data')
+    board.thumbnail_destination_dir = THUMBNAIL_DEST_DIR
 
   #appscheduler is too difficult to control (multiple jobs run simultaneously, not good for http requests to same site)
   #so i'm just hacking it here.
@@ -132,7 +178,6 @@ def main():
       update_archive(board)
     sleep(args.time_between_updates*SECONDS_TO_MINUTES)
       
-  
 
 if __name__ == "__main__":
   main()

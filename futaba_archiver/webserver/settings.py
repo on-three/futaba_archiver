@@ -82,8 +82,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+#Destination path for all images downloaded off yotsuba
+#for prodcution this should point to a path where static
+#file server can find images (i.e. they should not be served by django)
+LOCAL_STATIC_PATH = '/tmp/www/'
+
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
+  os.path.join(BASE_DIR, "static"),
+  LOCAL_STATIC_PATH,  
 )
 
 TEMPLATE_DIRS = (
