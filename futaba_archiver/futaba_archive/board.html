@@ -15,9 +15,13 @@
 <div class="postContainer opContainer">
   No.<a href="{{ thread.number }}">{{ thread.number }}</a>
    <span class='subject'>{{ thread.title }}</span> <span class='name'>{{ thread.poster }}</span><br>
+    {% if thread.image and thread.thumbnail %}
 {% load static %}
 {% get_static_prefix as STATIC_PREFIX %}
   <a href="{{ STATIC_PREFIX }}{{ board.name }}/images/{{ thread.image }}" target="_blank"><img src="{{ STATIC_PREFIX }}{{ board.name }}/thumbnails/{{ thread.thumbnail }}" alt="thumbnail" /></a>
+    {% else %}
+[no image available ]
+    {% endif %}
   <blockquote class="postMessage">{{ thread.text }}</blockquote>
 </div>
   <hr/>

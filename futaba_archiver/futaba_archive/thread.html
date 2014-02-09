@@ -3,7 +3,7 @@
 <head>
 {% autoescape off %}
 <title id="channel_name" class="boardTitle">{{ board.name }}</title>
-{% load staticfiles %}<link rel="stylesheet" href="{% static "yotsubanew.css" %}" type="text/css" />
+{% load staticfiles %}<link rel="stylesheet" href="{% static "archive.css" %}" type="text/css" />
 </head>
 <body>
 <a href="/{{ board.name }}/"><h1 class="boardname">{{ board.name }}</h1></a>
@@ -12,19 +12,22 @@
 <div class='thread'>
 <hr/>
 <div class="postContainer opContainer">
-No.{{ thread.number }}<br>
-  <span class='subject'>{{ thread.title }}</span> <span class='name'>{{ thread.poster }}</span><br>
+{%if thread.image and thread.thumbnail %}
 {% load static %}
 {% get_static_prefix as STATIC_PREFIX %}
-  <a href="{{ STATIC_PREFIX }}{{ board.name }}/images/{{ thread.image }}" target="_blank"><img src="{{ STATIC_PREFIX }}{{ board.name }}/thumbnails/{{ thread.thumbnail }}" alt="thumbnail" /></a>
+画像ファイル名：<a href="{{ STATIC_PREFIX }}{{ board.name }}/images/{{ thread.image }}" target="_blank">{{ thread.image }}</a><br>
+  <a href="{{ STATIC_PREFIX }}{{ board.name }}/images/{{ thread.image }}" target="_blank"><img src="{{ STATIC_PREFIX }}{{ board.name }}/thumbnails/{{ thread.thumbnail }}" alt="thumbnail" /></a>No.{{ thread.number }} <span class='subject'>{{ thread.title }}</span> <span class='name'>{{ thread.poster }}</span><br>
+{%else%}
+[no image available ]
+{% endif %}
   <blockquote class="postMessage">{{ thread.text }}</blockquote>
 </div>
-  {% for post in posts %}
+{% for post in posts %}
 </div class="postContainer replyContainer">
-  <div class="sideArrows">…</div>
-  <div class="post reply">
+<div class="sideArrows">…</div>
+<div class="post reply bordered">
       <td class='text_block'><span class='post_title'>{{ post.title }}</span> Name <span class='poster_name'>{{ post.poster }}</span> No.{{ post.number }}<br/>
-  {% if post.thumbnail %}
+  {% if post.thumbnail and post.image %}
 {% load static %}
 {% get_static_prefix as STATIC_PREFIX %}
   <a href="{{ STATIC_PREFIX }}{{ board.name }}/images/{{ post.image }}" target="_blank"><img src="{{ STATIC_PREFIX }}{{ board.name }}/thumbnails/{{ post.thumbnail }}" alt="thumbnail" /></a>

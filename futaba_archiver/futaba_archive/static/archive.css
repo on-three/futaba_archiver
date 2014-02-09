@@ -1,0 +1,59 @@
+
+body, td, th {
+    font-family: Helvetica,arial,freesans,clean,sans-serif;
+    font-size: 14px;
+}
+blockquote {
+  word-wrap:break-word;
+  max-width:800px;
+  display: block;
+}
+td{max-width:800px;}
+img {
+  float : left;
+  border : medium none;
+  padding 4px;
+}
+div.op {
+  display: inline;
+}
+div.opContainer {
+  display: inline;
+}
+.post_title {
+  color: red;
+  font-weight:bold;
+}
+.poster_name {
+  color: green;
+  font-weight:bold;
+}
+div.sideArrows {
+  float : left;
+  margin-right: 2px;
+  margin-top: 0px;
+  margin-left: 2px;
+}
+div.post {
+  display : block;
+  margin : 4px 0px;
+  overflow : hidden;
+}
+div.reply {
+  background-color: #eeeeee;
+  border-width : medium 1px 1px medium;
+  border-style: none solid solid none;
+  display: table;
+  padding : 2px;
+}
+
+.bordered {
+    border: solid #ccc 1px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 1px 1px #ccc; 
+    -moz-box-shadow: 0 1px 1px #ccc; 
+    box-shadow: 0 1px 1px #ccc;         
+}
+
