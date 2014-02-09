@@ -69,13 +69,14 @@ def get_file(url, destination):
     return url
   try:
     filename = filename_from_url(url)
-    #print 'downloading {file} to {dir} from {url}'.format(file=filename, dir=destination, url=url)
+    print 'downloading {file} to {dir} from {url}'.format(file=filename, dir=destination, url=url)
     filepath = destination + filename
     #if a local copy of file exists, don't download again
-    if os.path.exists:
-      return filepath
+    if os.path.exists(filepath):
+      print 'file {filepath} already exists'.format(filepath=filepath)
+      return filename
     urllib.urlretrieve(url, destination + filename)
-    return filepath
+    return filename
   except Exception as e:
     print str(e)
     return ''
@@ -112,32 +113,41 @@ def update_archive_db(board, thread):
   Can't currently carry those in the db. Or can we?
   '''
   db_time = datetime.fromtimestamp(mktime(thread.time))
-  dbp = DBPost(board=board, \
-    title=thread.title, \
-    poster=thread.name, \
-    date=db_time, \
-    number=thread.number, \
-    image=get_file(thread.image, board.image_destination_dir), \
-    thumbnail=get_file(thread.thumbnail, board.thumbnail_destination_dir), \
-    text=thread.text)
+  dbp, created = DBPost.objects.get_or_create(number=thread.number, board=board, date=db_time)
+  dbp.board = board
+  #dbp.title = thread.title
+  dbp.poster = thread.name
+  dbp.date = db_time
+  if not dbp.image:
+    dbp.image = get_file(thread.image, board.image_destination_dir)
+  if not dbp.thumbnail:
+    dbp.thumbnail = get_file(thread.thumbnail, board.thumbnail_destination_dir)
+  dbp.text = thread.text
   try:#save() call with raise on a duplicate post number save
     dbp.save()
   except Exception as e:
+    print unicode(thread)
+    print str(e)
     pass
   for post_number, response in thread.responses.iteritems():
     db_time = datetime.fromtimestamp(mktime(response.time))
-    r = DBPost(board=board, \
-      title=response.title, \
-      poster=response.name, \
-      date=db_time, \
-      number=response.number, \
-      image=get_file(response.image, board.image_destination_dir), \
-      thumbnail=get_file(response.thumbnail, board.thumbnail_destination_dir), \
-      text=response.text, \
-      parent=dbp)
+    r, created = DBPost.objects.get_or_create(number=response.number, board=board, date=db_time)
+    #r.board = response.board
+    r.title = response.title
+    r.poster = response.name
+    r.date = db_time
+    r.number = response.number
+    if not r.image:
+      r.image = get_file(response.image, board.image_destination_dir)
+    if not r.thumbnail:
+      r.thumbnail = get_file(response.thumbnail, board.thumbnail_destination_dir)
+    r.text = response.text
+    r.parent = dbp
     try:#save() will raise on a duplicate post number save
       r.save()
     except Exception as e:
+      print unicode(response)
+      print str(e)
       pass
 
 def update_archive(board):

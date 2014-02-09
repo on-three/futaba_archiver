@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+{% load staticfiles %}
 {% autoescape off %}
 <title>{{ board.name }}</title>
-{% load staticfiles %}<link rel="stylesheet" href="{% static "yotsubanew.css" %}" type="text/css" />
+<link rel="stylesheet" href="{% static "yotsubanew.css" %}" type="text/css" />
 </head>
 <body>
 <h1 class="boardname">{{ board.name }}</h1>
@@ -12,8 +13,11 @@
   <hr/>
     {% for thread in threads %}
 <div class="postContainer opContainer">
-  No.<a href="{{ thread.number }}">{{ thread.number }}</a><br>
-  <span class='subject'>{{ thread.title }}</span> <span class='name'>{{ thread.poster }}</span><br>
+  No.<a href="{{ thread.number }}">{{ thread.number }}</a>
+   <span class='subject'>{{ thread.title }}</span> <span class='name'>{{ thread.poster }}</span><br>
+{% load static %}
+{% get_static_prefix as STATIC_PREFIX %}
+  <a href="{{ STATIC_PREFIX }}{{ board.name }}/images/{{ thread.image }}" target="_blank"><img src="{{ STATIC_PREFIX }}{{ board.name }}/thumbnails/{{ thread.thumbnail }}" alt="thumbnail" /></a>
   <blockquote class="postMessage">{{ thread.text }}</blockquote>
 </div>
   <hr/>

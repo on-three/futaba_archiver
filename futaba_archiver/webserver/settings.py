@@ -89,7 +89,9 @@ LOCAL_STATIC_PATH = '/tmp/www/'
 
 STATICFILES_DIRS = (
   os.path.join(BASE_DIR, "static"),
-  LOCAL_STATIC_PATH,  
+  LOCAL_STATIC_PATH,
+  ('images',os.path.join(LOCAL_STATIC_PATH, 'images/')),
+  ('thumbnails',os.path.join(LOCAL_STATIC_PATH, 'thumbnails/')), 
 )
 
 TEMPLATE_DIRS = (
