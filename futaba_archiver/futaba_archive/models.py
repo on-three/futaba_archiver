@@ -35,3 +35,4 @@ class Post(models.Model):
 
   def is_thread(self):
     return self.parent is None
+

@@ -4,7 +4,7 @@
 {% load staticfiles %}
 {% autoescape off %}
 <title>{{ board.name }}</title>
-<link rel="stylesheet" href="{% static "yotsubanew.css" %}" type="text/css" />
+<link rel="stylesheet" href="{% static "archive.css" %}" type="text/css" />
 </head>
 <body>
 <h1 class="boardname">{{ board.name }}</h1>
@@ -12,7 +12,8 @@
   </div>
   <hr/>
     {% for thread in threads %}
-<div class="postContainer opContainer">
+<div class="post">
+  <div class="postContainer opContainer">
   No.<a href="{{ thread.number }}">{{ thread.number }}</a>
    <span class='subject'>{{ thread.title }}</span> <span class='name'>{{ thread.poster }}</span><br>
     {% if thread.image and thread.thumbnail %}
@@ -22,9 +23,25 @@
     {% else %}
 [no image available ]
     {% endif %}
-  <blockquote class="postMessage">{{ thread.text }}</blockquote>
-</div>
-  <hr/>
+  <blockquote class="postMessage">{{ thread.text }}</blockquote><br>
+  </div><!--end div postcontainer opcontainer-->
+{% for post in thread.responses|slice:":3" %}
+<div class="postContainer replyContainer">
+<div class="sideArrows">…</div>
+<div class="post reply bordered">
+      <td class='text_block'><span class='post_title'>{{ post.title }}</span> Name <span class='poster_name'>{{ post.poster }}</span> No.{{ post.number }}<br/>
+  {% if post.thumbnail and post.image %}
+{% load static %}
+{% get_static_prefix as STATIC_PREFIX %}
+  <a href="{{ STATIC_PREFIX }}{{ board.name }}/images/{{ post.image }}" target="_blank"><img src="{{ STATIC_PREFIX }}{{ board.name }}/thumbnails/{{ post.thumbnail }}" alt="thumbnail" /></a>
+  {% endif %}
+        <blockquote class="postMessage">{{ post.text }}</blockquote>
+  </div><!--end div post reply bordered-->
+</div><!--end div postcontainer replycontainer-->
+{% endfor %}
+
+</div><!--end div post-->
+<hr/>
     {% endfor %}
 </body>
 {% endautoescape %}

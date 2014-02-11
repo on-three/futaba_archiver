@@ -21,7 +21,9 @@ def board(request, board_name):
   if not board:
     return HttpResponseNotFound('<h1>Board not found</h1>')
   
-  threads = board.post_set.filter(parent=None)
+  threads = board.post_set.filter(parent=None).order_by('-date')
+  for thread in threads:
+    thread.responses = thread.post_set.all()
   t = loader.get_template('futaba_archive/board.html')
   c = Context({
     'board': board,
