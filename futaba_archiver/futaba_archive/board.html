@@ -7,10 +7,10 @@
 <link rel="stylesheet" href="{% static "archive.css" %}" type="text/css" />
 </head>
 <body>
-<h1 class="boardname">{{ board.name }}</h1>
+<div class="boardname">{{ board.name }}</div>
   <div name="top_div">
   </div>
-  <hr/>
+
     {% for thread in threads %}
 <div class="post">
   <div class="postContainer opContainer">
@@ -23,12 +23,12 @@
     {% else %}
 [no image available ]
     {% endif %}
-  <blockquote class="postMessage">{{ thread.text }}</blockquote><br>
+  <blockquote class="postMessage">{{ thread.text }}</blockquote>
   </div><!--end div postcontainer opcontainer-->
 {% for post in thread.responses|slice:":3" %}
 <div class="postContainer replyContainer">
 <div class="sideArrows">…</div>
-<div class="post reply bordered">
+<div class="post reply">
       <td class='text_block'><span class='post_title'>{{ post.title }}</span> Name <span class='poster_name'>{{ post.poster }}</span> No.{{ post.number }}<br/>
   {% if post.thumbnail and post.image %}
 {% load static %}
@@ -39,9 +39,7 @@
   </div><!--end div post reply bordered-->
 </div><!--end div postcontainer replycontainer-->
 {% endfor %}
-
 </div><!--end div post-->
-<hr/>
     {% endfor %}
 <!-- pagination -->
 <div class="pagination">
@@ -49,11 +47,9 @@
         {% if threads.has_previous %}
             <a href="?page={{ threads.previous_page_number }}">previous</a>
         {% endif %}
-
         <span class="current">
             Page {{ threads.number }} of {{ threads.paginator.num_pages }}.
         </span>
-
         {% if threads.has_next %}
             <a href="?page={{ threads.next_page_number }}">next</a>
         {% endif %}

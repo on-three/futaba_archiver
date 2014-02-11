@@ -1,11 +1,17 @@
 
 body, td, th {
-    font-family: Helvetica,arial,freesans,clean,sans-serif;
-    font-size: 14px;
+  font-family: Helvetica,arial,freesans,clean,sans-serif;
+  font-size: 14px;
+  background-color: #F0E0D6;
+  color : #800000;
+}
+.boardname
+{
+  text-align: center;
+  font-size: xx-large;
 }
 .postMessage {
   word-wrap:break-word;
-  padding: 5px 20px;
   display: block;
 }
 td{max-width:800px;}
@@ -36,14 +42,22 @@ div.sideArrows {
   margin-left: 2px;
 }
 div.post {
+  background-color: #FFFFEE;
+  padding: 10px 5px;
+  display : block;
+  margin : 4px 0px;
+  overflow : hidden;
+}
+div.thread {
+  background-color: #FFFFEE;
+  padding: 10px 5px;
   display : block;
   margin : 4px 0px;
   overflow : hidden;
 }
 div.reply {
-  background-color: #eeeeee;
-  border-width : medium 1px 1px medium;
-  border-style: none solid solid none;
+  background-color: #F0E0D6;
+  border-style: none;
   display: table;
   padding : 2px;
 }

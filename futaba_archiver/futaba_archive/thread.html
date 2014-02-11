@@ -6,11 +6,10 @@
 {% load staticfiles %}<link rel="stylesheet" href="{% static "archive.css" %}" type="text/css" />
 </head>
 <body>
-<a href="/{{ board.name }}/"><h1 class="boardname">{{ board.name }}</h1></a>
+<div class="boardname"><a href="/{{ board.name }}/">{{ board.name }}</a></div>
   <div name="top_div">
   </div>
 <div class='thread'>
-<hr/>
 <div class="postContainer opContainer">
 {%if thread.image and thread.thumbnail %}
 {% load static %}
@@ -23,9 +22,9 @@
   <blockquote class="postMessage">{{ thread.text }}</blockquote>
 </div>
 {% for post in posts %}
-</div class="postContainer replyContainer">
+<div class="postContainer replyContainer">
 <div class="sideArrows">…</div>
-<div class="post reply bordered">
+<div class="post reply">
       <td class='text_block'><span class='post_title'>{{ post.title }}</span> Name <span class='poster_name'>{{ post.poster }}</span> No.{{ post.number }}<br/>
   {% if post.thumbnail and post.image %}
 {% load static %}
