@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.template import Context, loader
 from django.http import HttpResponse
 from django.http import HttpResponseNotFound
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from futaba_archive.models import Board
 
 def index(request):
@@ -22,6 +23,17 @@ def board(request, board_name):
     return HttpResponseNotFound('<h1>Board not found</h1>')
   
   threads = board.post_set.filter(parent=None).order_by('-date')
+  paginator = Paginator(threads, 15) #15 threads per page
+  page = request.GET.get('page')
+  try:
+    threads = paginator.page(page)
+  except PageNotAnInteger:
+    # If page is not an integer, deliver first page.
+    threads = paginator.page(1)
+  except EmptyPage:
+    # If page is out of range (e.g. 9999), deliver last page of results.
+    threads = paginator.page(paginator.num_pages)
+
   for thread in threads:
     thread.responses = thread.post_set.all()
   t = loader.get_template('futaba_archive/board.html')

@@ -3,14 +3,15 @@ body, td, th {
     font-family: Helvetica,arial,freesans,clean,sans-serif;
     font-size: 14px;
 }
-blockquote {
+.postMessage {
   word-wrap:break-word;
-  max-width:800px;
+  padding: 5px 20px;
   display: block;
 }
 td{max-width:800px;}
 img {
   float : left;
+  padding: 0px 10px;
   border : medium none;
   padding 4px;
 }
