@@ -47,7 +47,6 @@ except ImportError:
   print 'Could not specify DJANGO_SETTINGS_MODULE via django settings module. Failing'
   sys.exit(-1)
 
-#TODO: Store image static destination path in db or in django settings?
 #NOTE: management of permissions to create/edit in this path is done here
 #you'll have to run this from a user in a group that has permissions
 STATIC_FILE_PATH = settings.LOCAL_STATIC_PATH
@@ -115,7 +114,7 @@ def update_archive_db(board, thread):
   db_time = datetime.fromtimestamp(mktime(thread.time))
   dbp, created = DBPost.objects.get_or_create(number=thread.number, board=board, date=db_time)
   dbp.board = board
-  #dbp.title = thread.title
+  dbp.title = thread.title
   dbp.poster = thread.name
   dbp.date = db_time
   if not dbp.image:
@@ -123,7 +122,7 @@ def update_archive_db(board, thread):
   if not dbp.thumbnail:
     dbp.thumbnail = get_file(thread.thumbnail, board.thumbnail_destination_dir)
   dbp.text = thread.text
-  try:#save() call with raise on a duplicate post number save
+  try:#save() call will raise on a duplicate post number save
     dbp.save()
   except Exception as e:
     print unicode(thread)
@@ -132,7 +131,6 @@ def update_archive_db(board, thread):
   for post_number, response in thread.responses.iteritems():
     db_time = datetime.fromtimestamp(mktime(response.time))
     r, created = DBPost.objects.get_or_create(number=response.number, board=board, date=db_time)
-    #r.board = response.board
     r.title = response.title
     r.poster = response.name
     r.date = db_time
@@ -155,7 +153,6 @@ def update_archive(board):
   threads = get_threads(board.url)
   print 'number of threads ' + board.url +' ' + str(len(threads))
   for thread in threads:
-    #print unicode(thread)
     update_archive_db(board, thread)
   print '----{board}:{url}----'.format(board=board.name, url=board.url)
 

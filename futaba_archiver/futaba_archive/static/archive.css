@@ -5,7 +5,11 @@ body, td, th {
   background-color: #F0E0D6;
   color : #800000;
 }
-.boardname
+div.header {
+  padding: 10px 5px;
+  display : block;  
+}
+div.boardname
 {
   text-align: center;
   font-size: xx-large;
@@ -42,6 +46,8 @@ div.sideArrows {
   margin-left: 2px;
 }
 div.post {
+  border-width : 1px;
+  border-style: dashed none dashed none;
   background-color: #FFFFEE;
   padding: 10px 5px;
   display : block;
@@ -49,6 +55,8 @@ div.post {
   overflow : hidden;
 }
 div.thread {
+  border-width : 1px;
+  border-style: dashed none dashed none;
   background-color: #FFFFEE;
   padding: 10px 5px;
   display : block;

@@ -7,14 +7,13 @@
 <link rel="stylesheet" href="{% static "archive.css" %}" type="text/css" />
 </head>
 <body>
+<div class="header">
 <div class="boardname">{{ board.name }}</div>
-  <div name="top_div">
-  </div>
-
+</div>
     {% for thread in threads %}
 <div class="post">
   <div class="postContainer opContainer">
-  No.<a href="{{ thread.number }}">{{ thread.number }}</a>
+Thread No.<a href="{{ thread.number }}">{{ thread.number }}</a>
    <span class='subject'>{{ thread.title }}</span> <span class='name'>{{ thread.poster }}</span><br>
     {% if thread.image and thread.thumbnail %}
 {% load static %}

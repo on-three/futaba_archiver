@@ -6,9 +6,9 @@
 {% load staticfiles %}<link rel="stylesheet" href="{% static "archive.css" %}" type="text/css" />
 </head>
 <body>
+<div class="header">
 <div class="boardname"><a href="/{{ board.name }}/">{{ board.name }}</a></div>
-  <div name="top_div">
-  </div>
+</div>
 <div class='thread'>
 <div class="postContainer opContainer">
 {%if thread.image and thread.thumbnail %}
