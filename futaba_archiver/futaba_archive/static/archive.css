@@ -2,24 +2,42 @@
 body, td, th {
   font-family: Helvetica,arial,freesans,clean,sans-serif;
   font-size: 14px;
-  background-color: #F0E0D6;
+  background-color: #FFFFEE;
   color : #800000;
 }
 div.header {
+  background-color: #FFFFEE;
   padding: 10px 5px;
   display : block;  
+}
+div.threadHeader {
+  background-color: #F0E0D6;
+  padding: 2px 2px;
+  border-width : 1px;
+  border-style: none none dashed none;
+}
+div.image_link {
+  padding: 0px 2px;
+}
+.thumbnail_frame {
+  padding: 2px 10px 2px 2px;
+  float : left;
 }
 div.boardname
 {
   text-align: center;
   font-size: xx-large;
 }
+div.op_text {
+  padding: 2px 2px;
+}
 .postMessage {
   word-wrap:break-word;
   display: block;
 }
 td{max-width:800px;}
-img {
+
+div.thumbnail {
   float : left;
   padding: 0px 10px;
   border : medium none;
@@ -31,12 +49,18 @@ div.op {
 div.opContainer {
   display: inline;
 }
+.post_number {
+  font-weight:bold;
+}
 .post_title {
   color: red;
   font-weight:bold;
 }
 .poster_name {
   color: green;
+  font-weight:bold;
+}
+.post_date {
   font-weight:bold;
 }
 div.sideArrows {
@@ -49,25 +73,28 @@ div.post {
   border-width : 1px;
   border-style: dashed none dashed none;
   background-color: #FFFFEE;
-  padding: 10px 5px;
   display : block;
   margin : 4px 0px;
   overflow : hidden;
 }
 div.thread {
-  border-width : 1px;
-  border-style: dashed none dashed none;
   background-color: #FFFFEE;
-  padding: 10px 5px;
   display : block;
-  margin : 4px 0px;
   overflow : hidden;
+  border-width : 1px;
+  border-style: solid solid solid solid;
+  margin : 4px 4px;
+}
+div.reply_header {
+  padding: 1px 4px;
+  border-width : 1px;
+  border-style: none none dashed none;  
 }
 div.reply {
   background-color: #F0E0D6;
-  border-style: none;
+  border-width : 1px;
+  border-style: solid solid solid solid;
   display: table;
-  padding : 2px;
 }
 
 .bordered {
