@@ -12,7 +12,7 @@
 <div class='thread'>
 <div class="postContainer opContainer">
 <div class='threadHeader'>
-Thread No.<span class='post_number'>{{ thread.number }}</span> Subject: <span class='post_title'>{{ thread.title }}</span> Posted by <span class='poster_name'>{{ thread.poster }}</span> on <span class='post_date'>Jan 1, 1970 12:00AM</span>
+Thread No.<span class='post_number'>{{ thread.number }}</span> Subject: <span class='post_title'>{{ thread.title }}</span> Posted by <span class='poster_name'>{{ thread.poster }}</span> on <span class='post_date'>{{ thread.date|date:"D, d M Y H:i:s" }}</span>
 </div><!--end thread header -->
 {%if thread.image and thread.thumbnail %}
 {% load static %}
@@ -32,10 +32,10 @@ Image：<a href="{{ STATIC_PREFIX }}{{ board.name }}/images/{{ thread.image }}" 
 </div>
 {% for post in posts %}
 <div class="postContainer replyContainer">
-<div class="sideArrows">…</div>
+<div class='reply_arrows css-vertical-text'>{{ forloop.counter }}.</div>
 <div class="post reply">
   <div class='reply_header'>
-      <td class='text_block'><span class='post_title'>{{ post.title }}</span> Name <span class='poster_name'>{{ post.poster }}</span> No.{{ post.number }}<br/>
+      <span class='post_title'>{{ post.title }}</span> Name <span class='poster_name'>{{ post.poster }}</span> No.<span class='post_number'>{{ post.number }}</span> <span class='post_date'>{{ post.date|date:"D, d M Y H:i:s" }}</span>
   </div>
   {% if post.thumbnail and post.image %}
 {% load static %}

@@ -1,7 +1,6 @@
 
 body, td, th {
   font-family: Helvetica,arial,freesans,clean,sans-serif;
-  font-size: 14px;
   background-color: #FFFFEE;
   color : #800000;
 }
@@ -14,6 +13,7 @@ div.threadHeader {
   background-color: #F0E0D6;
   padding: 2px 2px;
   border-width : 1px;
+  border-color: #CC9999;
   border-style: none none dashed none;
 }
 div.image_link {
@@ -61,10 +61,11 @@ div.opContainer {
   font-weight:bold;
 }
 .post_date {
-  font-weight:bold;
+  font-style: oblique;
 }
-div.sideArrows {
+div.reply_arrows {
   float : left;
+  font-size: small;
   margin-right: 2px;
   margin-top: 0px;
   margin-left: 2px;
@@ -74,7 +75,7 @@ div.post {
   border-style: dashed none dashed none;
   background-color: #FFFFEE;
   display : block;
-  margin : 4px 0px;
+  margin : 8px 4px;
   overflow : hidden;
 }
 div.thread {
@@ -83,16 +84,20 @@ div.thread {
   overflow : hidden;
   border-width : 1px;
   border-style: solid solid solid solid;
-  margin : 4px 4px;
+  border-color: #CC9999;
+  margin : 12px 4px;
 }
 div.reply_header {
+  font-size: small;
   padding: 1px 4px;
   border-width : 1px;
+  border-color: #CC9999;
   border-style: none none dashed none;  
 }
 div.reply {
   background-color: #F0E0D6;
   border-width : 1px;
+  border-color: #CC9999;
   border-style: solid solid solid solid;
   display: table;
 }
@@ -105,5 +110,28 @@ div.reply {
     -webkit-box-shadow: 0 1px 1px #ccc; 
     -moz-box-shadow: 0 1px 1px #ccc; 
     box-shadow: 0 1px 1px #ccc;         
+}
+
+.css-vertical-text {
+	/*color:#333;*/
+	/*border:0px solid red;*/
+	writing-mode:tb-rl;
+	-webkit-transform:rotate(90deg);
+	-moz-transform:rotate(90deg);
+	-o-transform: rotate(90deg);
+	white-space:nowrap;
+	display:block;
+	bottom:0;
+	width:20px;
+	height:20px;
+	/*font-family: ‘Trebuchet MS’, Helvetica, sans-serif;*/
+	/*font-size:24px;*/
+	/*font-weight:normal;*/
+	/*text-shadow: 0px 0px 1px #333;*/
+}
+
+.toptobottom{
+  width: 0;
+  word-wrap: break-word;
 }
 

@@ -35,7 +35,8 @@ def board(request, board_name):
     threads = paginator.page(paginator.num_pages)
 
   for thread in threads:
-    thread.responses = thread.post_set.all()
+    thread.responses = thread.post_set.reverse()[:5]
+
   t = loader.get_template('futaba_archive/board.html')
   c = Context({
     'board': board,
