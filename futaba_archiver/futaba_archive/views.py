@@ -35,7 +35,13 @@ def board(request, board_name):
     threads = paginator.page(paginator.num_pages)
 
   for thread in threads:
-    thread.responses = thread.post_set.reverse()[:5]
+    thread.responses = list(thread.post_set.order_by('number').all())
+    if thread.responses:
+      def add_response_index(response, index):
+        response.response_index = index+1
+        return response
+      #thread.responses = thread.responses[-5:]# [ x for i, x in enumerate(thread.responses[:-5])]
+      thread.responses = [ add_response_index(x, i) for i, x in enumerate(thread.responses)][-5:] # [ x for i, x in enumerate(thread.responses[:-5])]
 
   t = loader.get_template('futaba_archive/board.html')
   c = Context({
