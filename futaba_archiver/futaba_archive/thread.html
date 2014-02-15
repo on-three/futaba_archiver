@@ -40,7 +40,12 @@ Image：<a href="{{ STATIC_PREFIX }}{{ board.name }}/images/{{ thread.image }}" 
   {% if post.thumbnail and post.image %}
 {% load static %}
 {% get_static_prefix as STATIC_PREFIX %}
+<div class='image_link'>
+Image：<a href="{{ STATIC_PREFIX }}{{ board.name }}/images/{{ post.image }}" target="_blank">{{ post.image }}</a><br>
+</div>
+  <span class='thumbnail_frame'>
   <a href="{{ STATIC_PREFIX }}{{ board.name }}/images/{{ post.image }}" target="_blank"><img src="{{ STATIC_PREFIX }}{{ board.name }}/thumbnails/{{ post.thumbnail }}" alt="thumbnail" /></a>
+  </span>
   {% endif %}
         <blockquote class="postMessage">{{ post.text }}</blockquote>
   </div>
