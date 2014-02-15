@@ -9,6 +9,7 @@
 <body>
 <div class="header">
 <div class="boardname">{{ board.name }}</div>
+{% include "futaba_archive/pagination.html" %}
 </div>
     {% for thread in threads %}
 <div class='thread'>
@@ -52,20 +53,7 @@ Image：<a href="{{ STATIC_PREFIX }}{{ board.name }}/images/{{ thread.image }}" 
 </div>
  {% endfor %}
 
-<!-- pagination -->
-<div class="pagination">
-    <span class="step-links">
-        {% if threads.has_previous %}
-            <a href="?page={{ threads.previous_page_number }}">previous</a>
-        {% endif %}
-        <span class="current">
-            Page {{ threads.number }} of {{ threads.paginator.num_pages }}.
-        </span>
-        {% if threads.has_next %}
-            <a href="?page={{ threads.next_page_number }}">next</a>
-        {% endif %}
-    </span>
-</div>
+{% include "futaba_archive/pagination.html" %}
 
 </body>
 {% endautoescape %}

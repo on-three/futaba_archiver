@@ -6,7 +6,7 @@ body, td, th {
 }
 div.header {
   background-color: #FFFFEE;
-  padding: 10px 5px;
+  /*padding: 10px 5px;*/
   display : block;  
 }
 div.threadHeader {
@@ -133,5 +133,30 @@ div.reply {
 .toptobottom{
   width: 0;
   word-wrap: break-word;
+}
+div.pagination_container {
+  width: 100%;
+  text-align: center;
+}
+div.pagination{
+  display: inline-block;
+  background-color: #F0E0D6;
+  overflow : hidden;
+  border-width : 1px;
+  border-style: solid solid solid solid;
+  border-color: #CC9999;
+  margin : 12px 4px;
+  padding: 4px 8px;
+}
+span.current_page {
+  font-weight:bold;  
+}
+span.prev_page_number {
+  display: inline-block;
+  width:20px;
+}
+span.next_page_number {
+  display: inline-block;
+  width:20px;
 }
 

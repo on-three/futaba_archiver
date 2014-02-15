@@ -40,13 +40,16 @@ def board(request, board_name):
       def add_response_index(response, index):
         response.response_index = index+1
         return response
-      #thread.responses = thread.responses[-5:]# [ x for i, x in enumerate(thread.responses[:-5])]
-      thread.responses = [ add_response_index(x, i) for i, x in enumerate(thread.responses)][-5:] # [ x for i, x in enumerate(thread.responses[:-5])]
+      thread.responses = [ add_response_index(x, i) for i, x in enumerate(thread.responses)][-5:]
+  prev_pages = [ x for x in range(threads.number-5, threads.number) if x>0]
+  next_pages = [ x for x in range(threads.number+1, threads.number+6) if x<= paginator.num_pages ]
 
   t = loader.get_template('futaba_archive/board.html')
   c = Context({
     'board': board,
     'threads' : threads,
+    'prev_pages' : prev_pages,
+    'next_pages' : next_pages,
     })
   return HttpResponse(t.render(c))
 
