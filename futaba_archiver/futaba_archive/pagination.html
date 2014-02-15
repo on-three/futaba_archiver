@@ -1,30 +1,36 @@
 <!-- pagination -->
 <div class='pagination_container'>
 <div class="pagination">
-  {% if 1 not in prev_pages and threads.number != 1 %}
+{% if 1 not in prev_pages and threads.number != 1 %}
   <span class='first_page'> <a href="?page=1">First</a> </span>
-  {% endif %}
-  {% if threads.has_previous %}
-      <span class='prev_page'> <a href="?page={{ threads.previous_page_number }}">Prev</a> </span>
-  {% endif %}
-  <span class='prev_pages'>
-  {% for p in prev_pages %}
-    <span class='prev_page_number'><a href="?page={{ p }}">{{ p }}</a></span>
-  {% endfor %}
-  </span>
-  <span class="current_page">
-     [{{ threads.number }}]
-  </span>
-  </span class='next_pages'>
-  {% for p in next_pages %}
-    <span class='next_page_number'><a href="?page={{ p }}">{{ p }}</a></span>
-  {% endfor %}
-  </span>
-  {% if threads.has_next %}
-      <span class='next_page'> <a href="?page={{ threads.next_page_number }}">Next</a> </span>
-  {% endif %}
-  {% if threads.paginator.num_pages not in next_pages and threads.number != threads.paginator.num_pages %}
-   <span class='last_page'> <a href="?page={{ threads.paginator.num_pages }}">Last</a> </span>
-  {% endif %}
-</div>
-</div>
+{% else %}
+<span class='first_page'> First </span>
+{% endif %}
+{% if threads.has_previous %}
+<span class='prev_page'> <a href="?page={{ threads.previous_page_number }}">Prev</a> </span>
+{% else %}
+<span class='prev_page'> Prev </span>
+{% endif %}
+<span class='pagination_numbers'><span class='prev_pages'>
+{% for p in prev_pages %}
+<span class='prev_page_number'><a href="?page={{ p }}">{{ p }}</a></span>
+{% endfor %}
+</span><span class="current_page">
+[{{ threads.number }}]
+</span>
+<span class='next_pages'>
+{% for p in next_pages %}
+<span class='next_page_number'><a href="?page={{ p }}">{{ p }}</a></span>
+{% endfor %}
+</span></span>
+{% if threads.has_next %}
+<span class='next_page'> <a href="?page={{ threads.next_page_number }}">Next</a> </span>
+{% else %}
+<span class='next_page'> Next </span>
+{% endif %}
+{% if threads.paginator.num_pages not in next_pages and threads.number != threads.paginator.num_pages %}
+<span class='last_page'> <a href="?page={{ threads.paginator.num_pages }}">Last</a> </span>
+{% else %}
+<span class='last_page'> Last </span>
+{% endif %}
+</div></div>
